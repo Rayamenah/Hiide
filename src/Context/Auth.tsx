@@ -35,7 +35,7 @@ const Auth = (props: Props) => {
 
     useEffect(() => {
         setLoading(true)
-        const authe = authenticate
+        const auth = authenticate
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 setUser(user);
