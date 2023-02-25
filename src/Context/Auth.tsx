@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, createContext } from "react"
-import { getAuth, onAuthStateChanged } from "firebase/auth"
+import { User, getAuth, onAuthStateChanged } from "firebase/auth"
 import { doc, getDoc } from "firebase/firestore"
 import { firebaseDb, authenticate } from "../Utils/firebaseConfig"
 
@@ -9,11 +9,11 @@ interface Props {
 
 type ContextProps = {
     user: any;
-    setUser: React.Dispatch<React.SetStateAction<null>>;
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;
     signedIn: boolean;
     // username: string;
     // setUsername: React.Dispatch<React.SetStateAction<any>>;
-    setSignedIn: React.Dispatch<React.SetStateAction<boolean>>;
+    setSignedIn: React.Dispatch<any>;
     loading: boolean;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -29,8 +29,8 @@ const AuthContext = createContext<ContextProps>({
 
 const Auth = (props: Props) => {
     const { children } = props;
-    const [signedIn, setSignedIn] = useState(false);
-    const [user, setUser] = useState(null);
+    const [signedIn, setSignedIn] = useState<any | null>(false);
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {

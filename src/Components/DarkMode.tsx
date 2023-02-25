@@ -8,6 +8,7 @@ function DarkMode() {
 
     return (
         <Button
+            size={"sm"}
             aria-label="night mode switch"
             onClick={toggleColorMode}
         >
