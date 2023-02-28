@@ -23,7 +23,7 @@ const Footer = () => {
                 © {new Date().getFullYear()} Hiide - Send Anonymous Messages
             </Text>
             <Flex justifyContent={"space-between"} gap="4" flexWrap={"wrap"} alignItems={"center"}>
-                <Text pr={"3px"}>Built and designed Raymond </Text>
+                <Text pr={"3px"}>Built and designed by Raymond </Text>
                 <Link
                     color={"black"}
                     pr={"3px"}

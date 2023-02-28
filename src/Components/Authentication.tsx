@@ -153,7 +153,7 @@ const Authentication = () => {
 
                                     <Input
                                         type="email"
-                                        placeholder="johm.doe@example.com"
+                                        placeholder="john.doe@example.com"
                                         value={form.email}
                                         onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value, }
                                         ))} />

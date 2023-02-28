@@ -9,18 +9,21 @@ interface Props {
 
 type ContextProps = {
     user: any;
-    setUser: React.Dispatch<React.SetStateAction<User | null>>;
-    signedIn: boolean;
-    // username: string;
-    // setUsername: React.Dispatch<React.SetStateAction<any>>;
-    setSignedIn: React.Dispatch<any>;
     loading: boolean;
+    signedIn: boolean;
+    username: string;
+    setUsername: React.Dispatch<React.SetStateAction<any>>;
+    setUser: React.Dispatch<React.SetStateAction<User | null>>;
+    setSignedIn: React.Dispatch<any>;
     setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+
 }
 const AuthContext = createContext<ContextProps>({
     signedIn: false,
     user: null,
     loading: true,
+    usernam: "",
+    setUserName: null,
     setSignedIn: null,
     setUser: null,
     setLoading: null
@@ -30,6 +33,7 @@ const AuthContext = createContext<ContextProps>({
 const Auth = (props: Props) => {
     const { children } = props;
     const [signedIn, setSignedIn] = useState<any | null>(false);
+    const [username, setUsername] = useState("")
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -50,6 +54,8 @@ const Auth = (props: Props) => {
                 user,
                 signedIn,
                 loading,
+                username,
+                setUsername,
                 setSignedIn,
                 setUser,
                 setLoading
