@@ -5,10 +5,12 @@ import {
     Text,
     useColorMode,
     useToast,
+    useDisclosure
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FaShare } from "react-icons/fa";
 import { AnonymousMessage } from "../Utils/types";
+
 
 
 interface Props {
@@ -19,6 +21,7 @@ function Messages(props: Props) {
     const { msg } = props;
     const toast = useToast();
     const { colorMode } = useColorMode();
+    const {onOpen, isOpen, onClose} = useDisclosure()
     const [generatingImage, setGeneratingImage] = useState(false);
 
     //   const handleShareMsg = async () => {
@@ -76,6 +79,7 @@ function Messages(props: Props) {
     //   };
 
     return (
+        <>
         <Grid
             border={"1px solid #ccc"}
             padding={"1rem"}
@@ -107,6 +111,7 @@ function Messages(props: Props) {
                 </Button>
             </Flex>
         </Grid>
+</>
     );
 }
 

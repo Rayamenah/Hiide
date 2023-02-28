@@ -11,8 +11,9 @@ import {
     ModalCloseButton,
     FormLabel,
     useToast,
+    useDisclosure
 } from "@chakra-ui/react";
-import { firebaseDb } from "../Utils/firebaseConfig";
+import { Db } from "../Utils/firebaseConfig";
 import {
     collection,
     doc,
@@ -29,7 +30,7 @@ interface Props {
     onClose: () => void;
 }
 
-function ChooseUsernameModal(props: Props) {
+function Username(props: Props) {
     const { isOpen, onClose } = props;
     const [usernameInput, setUsernameInput] = useState("");
     const toast = useToast();
@@ -38,7 +39,7 @@ function ChooseUsernameModal(props: Props) {
     const handleChooseUsername = async (e: any) => {
         e.preventDefault();
 
-        const anonymousMsgsRef = collection(firebaseDb, "anonymous-msgs");
+        const anonymousMsgsRef = collection(Db, "anonymous-msgs");
         const q = query(
             anonymousMsgsRef,
             where("username", "==", usernameInput)
@@ -54,7 +55,7 @@ function ChooseUsernameModal(props: Props) {
                 isClosable: true,
             });
         } else {
-            await setDoc(doc(firebaseDb, "anonymous-msgs", user.email), {
+            await setDoc(doc(Db, "anonymous-msgs", user.email), {
                 email: user.email,
                 username: usernameInput,
             });
@@ -103,4 +104,4 @@ function ChooseUsernameModal(props: Props) {
     );
 }
 
-export default ChooseUsernameModal;
+export default Username;

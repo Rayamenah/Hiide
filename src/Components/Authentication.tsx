@@ -17,7 +17,12 @@ import {
 } from "firebase/auth"
 import { authenticate } from "../Utils/firebaseConfig"
 
-const Authentication = () => {
+interface Props {
+    newUser?: boolean
+}
+
+const Authentication = (props: Props) => {
+    const { newUser = false } = props;
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { signedIn } = useAuth()
     const toast = useToast();

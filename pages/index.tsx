@@ -13,7 +13,7 @@ import Loader from "../src/Components/Loader";
 import { useAuth } from "../src/Context/Auth";
 //firebase
 import { collection, getDocs, addDoc, query } from "firebase/firestore"
-import { firebaseDb } from "../src/Utils/firebaseConfig";
+import { Db } from "../src/Utils/firebaseConfig";
 
 
 
@@ -27,7 +27,7 @@ export default function Home() {
 
     const fetchMessages = async () => {
       if (user?.email) {
-        const msg = collection(firebaseDb,
+        const msg = collection(Db,
           "anonymous-msgs",
           user?.email,
           "messages")
@@ -53,19 +53,6 @@ export default function Home() {
     }
 
     fetchMessages()
-
-    // const sendmsg = async () => {
-    //   const msg = await addDoc(
-    //     collection(firebaseDb, "anonymous-msgs", user?.email, "messages"),
-    //     {
-    //       message: "hello raymond",
-    //       created_at: new Date(),
-    //     }
-    //   );
-
-    //   setAnonymousMsg(msg)
-    // }
-    // sendmsg()
 
   }, [user?.email, toast])
   return (
@@ -101,9 +88,11 @@ export default function Home() {
             {anonMsg.map((msg) => (
               <Messages key={msg.id} msg={msg} />
             ))}
+
+            {anonMsg.length === 0 && !loading && <NoMessages />}
+
           </Grid>
         }
-        {/* {anonMsg.length === 0 && !loading && <NoMessages />} */}
 
       </Box >
       <Footer />
