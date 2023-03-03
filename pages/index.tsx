@@ -16,12 +16,10 @@ import { collection, getDocs, addDoc, query } from "firebase/firestore"
 import { Db } from "../src/Utils/firebaseConfig";
 
 
-
-
 export default function Home() {
   const toast = useToast()
   const { user, signedIn, loading } = useAuth()
-  const [anonMsg, setAnonMsg] = useState([])
+  const [anonMsg, setAnonMsg] = useState([{}])
 
   useEffect(() => {
 
@@ -40,6 +38,8 @@ export default function Home() {
           }))
 
           setAnonMsg(messages)
+
+          // console.log(messages)
         } catch (error) {
           toast({
             title: "Error",
@@ -63,7 +63,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box w="100%" p="6" px="12">
+      <Box w="100%" p="4" px="8">
         <Header />
 
         {!signedIn &&
@@ -88,11 +88,10 @@ export default function Home() {
             {anonMsg.map((msg) => (
               <Messages key={msg.id} msg={msg} />
             ))}
-
-            {anonMsg.length === 0 && !loading && <NoMessages />}
-
           </Grid>
         }
+        {anonMsg.length === 0 && !loading && <NoMessages />}
+
 
       </Box >
       <Footer />

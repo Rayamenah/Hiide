@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import NextLink from "next/link";
 import { Db } from "../src/Utils/firebaseConfig";
 import { getAuth, getRedirectResult } from "firebase/auth";
 import { useAuth } from "../src/Context/Auth"
@@ -23,6 +22,7 @@ import {
     Text,
 } from "@chakra-ui/react";
 
+import Header from "../src/Components/Header"
 import Footer from "../src/Components/Footer";
 import Authentication from "../src/Components/Authentication";
 
@@ -30,19 +30,20 @@ const SendMessage = () => {
     const router = useRouter();
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const userId = router.query.user as string;
+    const { signedIn, user, username } = useAuth();
+
     const [anonymousMsg, setAnonymousMsg] = useState("");
     const [submitting, setSubmitting] = useState(false);
     const [footer, setFooter] = useState(true);
-    const { signedIn, user, username } = useAuth();
     const Character_Limit = 250;
+    const userId = router.query.user as string;
+
 
     ///////////// submit function
 
     const HandleSubmit = async (e: any) => {
-        const value = e.prevent.default;
+        e.prevent.default();
         setSubmitting(true)
-
         if (anonymousMsg.trim().length === 0) {
             toast({
                 title: "this field is empty",
@@ -65,15 +66,13 @@ const SendMessage = () => {
             return;
         }
 
+        //query the database to check if a user is registered with this username
         const q = query(collection(Db, "anonymous-msgs"), where("username", "==", userId));
-
         const querySnapshot = await getDocs(q);
-
         if (querySnapshot.empty) {
             toast({
                 title: "User does not exist!",
-                description:
-                    "There's no such user with this username. Please check that you used the right link",
+                description: "There's no such user with this username. Please check that you used the right link",
                 status: "error",
                 duration: 3000,
                 isClosable: true,
@@ -81,15 +80,14 @@ const SendMessage = () => {
             setSubmitting(false);
             return;
         }
-
+        //if user exists send the message
         const userEmail = querySnapshot?.docs[0]?.data()?.email;
-
         await addDoc(collection(Db, "anonymous-msgs", userEmail, "messages"), {
             message: anonymousMsg,
             created_at: new Date()
         })
-
         setSubmitting(false)
+
 
         if (!signedIn) {
             onOpen()
@@ -105,6 +103,7 @@ const SendMessage = () => {
 
         setAnonymousMsg("")
     }
+
     /////////////// input function 
     const HandleInput = (e: any) => {
         const value = e.target.value
@@ -112,6 +111,25 @@ const SendMessage = () => {
             setAnonymousMsg(value)
         }
     }
+
+    useEffect(() => {
+        const auth = getAuth();
+        getRedirectResult(auth)
+            .then((result) => {
+                if (result?.user) {
+                    window.location.href = "/";
+                }
+            })
+            .catch((error) => {
+                toast({
+                    title: "Error",
+                    description: error.message,
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                });
+            });
+    }, [username, toast]);
 
     const HandleFocus = () => {
 
@@ -124,6 +142,7 @@ const SendMessage = () => {
 
     return (
         <>
+            <Header />
             <Flex
                 flexDirection={"column"}
                 width={"100%"}

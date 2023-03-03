@@ -34,7 +34,7 @@ const Footer = () => {
                 <Link
                     color={"blue.600"}
                     pr={"3px"}
-                    href="https://twitter.com/RhaymondJames"
+                    href="https://twitter.com/JamesRhaymond"
                 >
                     <FaTwitter />
                 </Link>{" "}

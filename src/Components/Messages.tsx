@@ -5,7 +5,6 @@ import {
     Text,
     useColorMode,
     useToast,
-    useDisclosure
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FaShare } from "react-icons/fa";
@@ -21,7 +20,6 @@ function Messages(props: Props) {
     const { msg } = props;
     const toast = useToast();
     const { colorMode } = useColorMode();
-    const {onOpen, isOpen, onClose} = useDisclosure()
     const [generatingImage, setGeneratingImage] = useState(false);
 
     //   const handleShareMsg = async () => {
@@ -80,38 +78,38 @@ function Messages(props: Props) {
 
     return (
         <>
-        <Grid
-            border={"1px solid #ccc"}
-            padding={"1rem"}
-            borderRadius={"md"}
-            height={{ base: "300px", sm: "200px" }}
-            width={"100%"}
-            gridTemplateRows={"5fr 1fr"}
-            justifySelf={"center"}
-            mt={"4"}
-        >
-            <Text>{msg.message}</Text>
+            <Grid
+                border={"1px solid #ccc"}
+                padding={"1rem"}
+                borderRadius={"md"}
+                height={{ base: "300px", sm: "200px" }}
+                width={"100%"}
+                gridTemplateRows={"5fr 1fr"}
+                justifySelf={"center"}
+                mt={"4"}
+            >
+                <Text>{msg.message}</Text>
 
-            <Flex justifyContent={"space-between"} alignItems={"center"}>
-                <Text textAlign={"right"} fontSize={"sm"}>
-                    {msg.created_at &&
-                        new Date(msg?.created_at?.seconds * 1000).toLocaleDateString()}
-                </Text>
+                <Flex justifyContent={"space-between"} alignItems={"center"}>
+                    <Text textAlign={"right"} fontSize={"sm"}>
+                        {msg.created_at &&
+                            new Date(msg?.created_at?.seconds * 1000).toLocaleDateString()}
+                    </Text>
 
-                <Button
-                    isLoading={generatingImage}
-                    //   onClick={() => handleShareMsg()}
-                    color={"gray"}
-                    size={"sm"}
-                >
-                    <Flex alignItems={"center"} columnGap={"5px"}>
-                        <FaShare />
-                        <Text>Share</Text>
-                    </Flex>
-                </Button>
-            </Flex>
-        </Grid>
-</>
+                    <Button
+                        isLoading={generatingImage}
+                        //   onClick={() => handleShareMsg()}
+                        color={"gray"}
+                        size={"sm"}
+                    >
+                        <Flex alignItems={"center"} columnGap={"5px"}>
+                            <FaShare />
+                            <Text>Share</Text>
+                        </Flex>
+                    </Button>
+                </Flex>
+            </Grid>
+        </>
     );
 }
 

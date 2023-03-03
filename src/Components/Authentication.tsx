@@ -14,8 +14,10 @@ import {
     signInWithEmailAndPassword,
     signInWithRedirect,
     sendPasswordResetEmail
-} from "firebase/auth"
-import { authenticate } from "../Utils/firebaseConfig"
+} from "firebase/auth";
+import { authenticate } from "../Utils/firebaseConfig";
+import errorCodesMap from "../Utils/firebase.errorCodes";
+
 
 interface Props {
     newUser?: boolean
@@ -80,11 +82,11 @@ const Authentication = (props: Props) => {
             setForm({ ...form, submitting: false })
             toast({
                 title: "Error",
-                description: "Something went wrong",
-                status: "success",
+                description: errorCodesMap[error.code],
+                status: "error",
                 duration: 3000,
-                isClosable: true
-            })
+                isClosable: true,
+            });
         }
 
     }
@@ -107,7 +109,7 @@ const Authentication = (props: Props) => {
         } catch (error) {
             toast({
                 title: "Error",
-                description: "something went wrong",
+                description: errorCodesMap[error.code],
                 status: "error",
                 duration: 3000,
                 isClosable: true,
@@ -116,25 +118,28 @@ const Authentication = (props: Props) => {
         } finally {
             setForm({ ...form, submitting: false })
         }
-    }
+    };
 
     const ModalHeading = () => {
-        if (form.isNewUser) {
+        if (form.isNewUser && !form.forgotPassword) {
             return "Create Account"
+        } else if (form.forgotPassword) {
+            return "reset password"
         } else {
-            return "Sign In"
+            return "Sign in"
         }
-    }
+    };
 
 
     return (
-        <Box p="4" mt="10">
+        <Flex p="4" mt="10"
+            justifyContent={"center"}>
             <Grid rowGap={3}>
-                <Button leftIcon={<FcGoogle />} onClick={GoogleLogin}>
+                <Button width={"15rem"} leftIcon={<FcGoogle />} onClick={GoogleLogin}>
                     Sign in with Google
                 </Button>
 
-                <Button leftIcon={<AiTwotoneMail />} onClick={onOpen}>
+                <Button width={"15rem"} leftIcon={<AiTwotoneMail />} onClick={onOpen}>
                     Sign in with Email
                 </Button>
             </Grid>
@@ -267,7 +272,7 @@ const Authentication = (props: Props) => {
                     </ModalBody>
                 </ModalContent>
             </Modal>
-        </Box >
+        </Flex >
     )
 }
 export default Authentication

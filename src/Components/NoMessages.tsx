@@ -1,6 +1,6 @@
 import { Box, Flex, Text, Button, useDisclosure } from "@chakra-ui/react";
 import React from "react";
-import {FaShare } from "react-icons/fa";
+import { FaShare } from "react-icons/fa";
 import { useAuth } from "../Context/Auth"
 import Username from "./Username"
 
@@ -11,7 +11,7 @@ function NoMessagesView(props: Props) {
     const { onOpen, isOpen, onClose } = useDisclosure()
     const { username } = useAuth()
     return (
-        <Flex height={"70vh"} justifyContent={"center"} alignItems={"center"}>
+        <Flex width={"100%"} height={"70vh"} justifyContent={"center"} alignItems={"center"}>
             <Box>
                 <Text textAlign={"center"} fontSize={"sm"} mb="4">
                     Oops! 😅 No one has sent you a message. Create your username, share your profile URL and check
