@@ -82,10 +82,11 @@ function Messages(props: Props) {
                 border={"1px solid #ccc"}
                 padding={"1rem"}
                 borderRadius={"md"}
-                height={{ base: "300px", sm: "200px" }}
-                width={"100%"}
+                height={{ base: "300px", sm: "300px" }}
+                width={{ base: "350px", sm: "500px" }}
                 gridTemplateRows={"5fr 1fr"}
                 justifySelf={"center"}
+                overflow={"hidden"}
                 mt={"4"}
             >
                 <Text>{msg.message}</Text>

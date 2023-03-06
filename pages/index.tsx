@@ -12,7 +12,7 @@ import NoMessages from "../src/Components/NoMessages"
 import Loader from "../src/Components/Loader";
 import { useAuth } from "../src/Context/Auth";
 //firebase
-import { collection, getDocs, addDoc, query } from "firebase/firestore"
+import { collection, getDocs, query } from "firebase/firestore"
 import { Db } from "../src/Utils/firebaseConfig";
 
 
@@ -39,7 +39,6 @@ export default function Home() {
 
           setAnonMsg(messages)
 
-          // console.log(messages)
         } catch (error) {
           toast({
             title: "Error",
@@ -77,21 +76,22 @@ export default function Home() {
 
         {signedIn && user.emailVerified && anonMsg &&
 
-          <Grid
-            gridTemplateColumns={{
-              base: "1fr",
-              lg: "1fr 1fr",
-            }}
-            columnGap={"2rem"}
-            rowGap={"2rem"}
-          >
-            {anonMsg.map((msg) => (
-              <Messages key={msg.id} msg={msg} />
-            ))}
-          </Grid>
+          <Box>
+            <Grid
+              gridTemplateColumns={{
+                base: "1fr",
+                lg: "1fr 1fr",
+              }}
+              columnGap={"2rem"}
+              rowGap={"2rem"}
+            >
+              {anonMsg.map((msg) => (
+                <Messages key={msg.id} msg={msg} />
+              ))}
+            </Grid>
+            {anonMsg.length === 0 && !loading && <NoMessages />}
+          </Box>
         }
-        {anonMsg.length === 0 && !loading && <NoMessages />}
-
 
       </Box >
       <Footer />

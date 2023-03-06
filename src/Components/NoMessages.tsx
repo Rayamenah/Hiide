@@ -37,7 +37,6 @@ function NoMessagesView(props: Props) {
                             leftIcon={<FaShare />}
                         // onClick={shareLink}
                         >
-                            <Text display={{ base: "none", lg: "block" }}>Share your link</Text>
 
                             <Flex
                                 columnGap={"5px"}
@@ -45,7 +44,7 @@ function NoMessagesView(props: Props) {
                                 display={{ base: "flex", lg: "none" }}
                             >
                                 <Text>Share your link</Text>
-                                <FaShare />
+
                             </Flex>
                         </Button>
                     </Flex>

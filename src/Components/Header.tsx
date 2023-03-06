@@ -1,26 +1,55 @@
 import NextLink from "next/link";
-import { Box, Flex, Text, Spacer, Button, useToast } from "@chakra-ui/react"
-import DarkMode from "./DarkMode"
-import SignOut from "./SignOut"
+import { Box, Flex, Text, Spacer, Button, useToast } from "@chakra-ui/react";
+import DarkMode from "./DarkMode";
+import SignOut from "./SignOut";
+import { collection, query, getDocs, where } from "firebase/firestore";
+import { Db } from "../Utils/firebaseConfig"
 import { useAuth } from "../Context/Auth";
-import { FaShare } from "react-icons/fa"
-import { copyTextToClipboard } from "../Utils/copyToClipboard"
+import { FaShare } from "react-icons/fa";
+import { copyTextToClipboard } from "../Utils/copyToClipboard";
+import { useEffect } from "react";
 
 
 const Header = () => {
-    const toast = useToast()
-    const { signedIn, username } = useAuth()
-    const url = `https://anony-app.vercel.app/${username}`
+    const toast = useToast();
+    const { user, signedIn, username, setUsername } = useAuth();
+    const url = `https://anony-app.vercel.app/${username}`;
+
+    useEffect(() => {
+        const findUsername = async () => {
+            if (user?.email) {
+                const name = query(collection(Db, "anonymous-msgs"), where("email", "==", user.email));
+                try {
+                    const docSnap = await getDocs(name)
+                    const signedUser = docSnap?.docs[0]?.data()?.username;
+                    setUsername(signedUser)
+                } catch (error) {
+                    toast({
+                        title: "something went wrong",
+                        description: "could not find username",
+                        status: "error",
+                        duration: 3000,
+                        isClosable: true
+                    })
+                }
+            }
+        }
+
+        findUsername()
+
+    }, [setUsername, toast, user?.email])
 
     const ShareLink = async () => {
+
         copyTextToClipboard(url)
+
         toast({
             title: "link copied",
             description: "now share to your friends",
-            duration: 300,
+            duration: 3000,
             status: "success",
             isClosable: true
-        })
+        });
 
         if (navigator.share) {
             try {
@@ -46,7 +75,8 @@ const Header = () => {
             <Box w="100" >
                 <Flex align="true">
                     <Box>
-                        <NextLink href={"/"}>                        <Text fontSize="2xl" as="b">H i i d e</Text>
+                        <NextLink href={"/"}>
+                            <Text fontSize="2xl" as="b">H i i d e</Text>
                         </NextLink>
                     </Box>
                     <Spacer />
@@ -55,9 +85,11 @@ const Header = () => {
                             size="sm"
                             variant="outline"
                             colorScheme="blue"
-                            leftIcon={<FaShare />}
-                            onClick={ShareLink}>Share Link</Button>
-                        }
+                            leftIcon={username ? <FaShare /> : undefined}
+                            onClick={ShareLink}
+                        >
+                            share link
+                        </Button>}
                         {signedIn && <SignOut />}
                         <DarkMode />
                     </Flex>

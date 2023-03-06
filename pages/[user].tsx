@@ -38,11 +38,12 @@ const SendMessage = () => {
     const Character_Limit = 250;
     const userId = router.query.user as string;
 
+    // console.log(anonymousMsg)
 
     ///////////// submit function
 
     const HandleSubmit = async (e: any) => {
-        e.prevent.default();
+        e.preventDefault();
         setSubmitting(true)
         if (anonymousMsg.trim().length === 0) {
             toast({
@@ -81,11 +82,17 @@ const SendMessage = () => {
             return;
         }
         //if user exists send the message
-        const userEmail = querySnapshot?.docs[0]?.data()?.email;
-        await addDoc(collection(Db, "anonymous-msgs", userEmail, "messages"), {
-            message: anonymousMsg,
-            created_at: new Date()
-        })
+        try {
+            const userEmail = querySnapshot?.docs[0]?.data()?.email;
+            await addDoc(collection(Db, "anonymous-msgs", userEmail, "messages"), {
+                message: anonymousMsg,
+                created_at: new Date()
+            })
+        } catch (error) {
+            console.log(error)
+            setSubmitting(false)
+        }
+
         setSubmitting(false)
 
 
@@ -142,64 +149,67 @@ const SendMessage = () => {
 
     return (
         <>
-            <Header />
-            <Flex
-                flexDirection={"column"}
-                width={"100%"}
-                maxW={"450px"}
-                padding={"2rem"}
-                margin={"0 auto"}
-            >
-                <Heading fontWeight={"medium"} size={"md"} mb="0.5rem" as={"h1"}>
-                    send
-                    <Box px={"5px"} as="span" color="blue.700">
-                        {userId}
+            <Box w="100%" p="4" px="8">
+                <Header />
+                <Flex
+                    flexDirection={"column"}
+                    width={"100%"}
+                    maxW={"500px"}
+                    padding={"1rem"}
+                    margin={"0 auto"}
+                >
+                    <Heading fontWeight={"medium"} size={"md"} mb="0.5rem" as={"h1"}>
+                        send
+                        <Box px={"5px"} as="span" color="blue.700">
+                            {userId}
+                        </Box>
+                        an anonymous message
+                    </Heading>
+
+                    <Box as="form" onSubmit={HandleSubmit}>
+                        <Textarea
+                            maxLength={250}
+                            display={"block"}
+                            value={anonymousMsg}
+                            onChange={HandleInput}
+                            height={"250px"}
+                            width={"100%"}
+                            onFocus={HandleFocus}
+                            onBlur={HandleBlur}
+                            placeholder={`type a message for ${userId}`}
+                            mb={"1rem"}
+                        />
+                        <Flex justifyContent="space-between">
+                            <Text>
+                                <Box as="span">{anonymousMsg.length}</Box>/{Character_Limit}
+                            </Text>
+                            <Button
+                                bg={"#0D67FF"}
+                                type="submit"
+                                width="100px"
+                                isLoading={submitting}
+                                loadingText="sending"
+                            >
+                                Send
+                            </Button>
+                        </Flex>
                     </Box>
-                    an anonymous message
-                </Heading>
+                </Flex>
 
-                <Box as="form" onSubmit={HandleSubmit}>
-                    <Textarea
-                        maxLength={250}
-                        display={"block"}
-                        value={anonymousMsg}
-                        onChange={HandleInput}
-                        height={"height"}
-                        onFocus={HandleFocus}
-                        onBlur={HandleBlur}
-                        placeholder={`type a message for ${userId}`}
-                        mb={"1rem"}
-                    />
-                    <Flex justifyContent="space-between">
-                        <Text>
-                            <Box as="span">{anonymousMsg.length}</Box>/{Character_Limit}
-                        </Text>
-                        <Button
-                            bg={"#0D67FF"}
-                            type="submit"
-                            width="100px"
-                            isLoading={submitting}
-                            loadingText="sending"
-                        >
-                            Send
-                        </Button>
-                    </Flex>
-                </Box>
-            </Flex>
+                {footer && <Footer />}
 
-            {footer && <Footer />}
-
-            <Modal isCentered isOpen={isOpen} onClose={onClose}>
-                <ModalOverlay />
-                <ModalContent paddingBottom={"2rem"}>
-                    <ModalHeader>{userId} has received your message</ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                        <Text mb={"1.5rem"}>Now create your account</Text>
-                        <Authentication newUser />
-                    </ModalBody>
-                </ModalContent>
-            </Modal>
+                <Modal isCentered isOpen={isOpen} onClose={onClose}>
+                    <ModalOverlay />
+                    <ModalContent paddingBottom={"2rem"}>
+                        <ModalHeader>{userId} has received your message</ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <Text mb={"1.5rem"}>Now create your account</Text>
+                            <Authentication newUser />
+                        </ModalBody>
+                    </ModalContent>
+                </Modal>
+            </Box>
         </>
     )
 }
