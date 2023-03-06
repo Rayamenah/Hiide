@@ -146,7 +146,6 @@ const SendMessage = () => {
 
     }
 
-
     return (
         <>
             <Box w="100%" p="4" px="8">
