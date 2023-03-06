@@ -145,7 +145,6 @@ const SendMessage = () => {
     const HandleBlur = () => {
 
     }
-
     return (
         <>
             <Box w="100%" p="4" px="8">
