@@ -14,12 +14,24 @@ import { useAuth } from "../src/Context/Auth";
 //firebase
 import { collection, getDocs, query } from "firebase/firestore"
 import { Db } from "../src/Utils/firebaseConfig";
+import { AnonymousMessage } from "../src/Utils/types";
+
 
 
 export default function Home() {
+  type result = {
+    id: string,
+    message: string,
+    created_at: {
+      seconds: number,
+      nanoseconds: number
+    }
+  };
+
+
   const toast = useToast()
   const { user, signedIn, loading } = useAuth()
-  const [anonMsg, setAnonMsg] = useState([{}])
+  const [anonMsg, setAnonMsg] = useState<result[]>([])
 
   useEffect(() => {
 
@@ -34,7 +46,8 @@ export default function Home() {
           const docSnap = await getDocs(q)
           const messages = docSnap.docs.map((doc) => ({
             id: doc.id,
-            ...doc.data()
+            message: doc.data().message,
+            created_at: doc.data().created_at
           }))
 
           setAnonMsg(messages)
@@ -88,13 +101,13 @@ export default function Home() {
               rowGap={"2rem"}
             >
               {anonMsg.map((msg) => (
-                <Messages key={msg.id} msg={msg} />
+                <Messages key={msg.id} message={msg.message} created_at={msg.created_at} />
               ))}
             </Grid>
             {anonMsg.length === 0 && !loading && <NoMessages />}
           </Box>
         }
-        
+
       </Box >
       <Footer />
     </>

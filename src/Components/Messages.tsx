@@ -13,11 +13,15 @@ import { AnonymousMessage } from "../Utils/types";
 
 
 interface Props {
-    msg: AnonymousMessage;
+    message: string,
+    created_at: {
+        seconds: number,
+        nanoseconds: number
+    }
 }
 
 function Messages(props: Props) {
-    const { msg } = props;
+    const { created_at, message } = props;
     const toast = useToast();
     const { colorMode } = useColorMode();
     const [generatingImage, setGeneratingImage] = useState(false);
@@ -89,12 +93,12 @@ function Messages(props: Props) {
                 overflow={"hidden"}
                 mt={"4"}
             >
-                <Text>{msg.message}</Text>
+                <Text>{message}</Text>
 
                 <Flex justifyContent={"space-between"} alignItems={"center"}>
                     <Text textAlign={"right"} fontSize={"sm"}>
-                        {msg.created_at &&
-                            new Date(msg?.created_at?.seconds * 1000).toLocaleDateString()}
+                        {created_at &&
+                            new Date(created_at?.seconds * 1000).toLocaleDateString()}
                     </Text>
 
                     <Button
