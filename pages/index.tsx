@@ -54,6 +54,8 @@ export default function Home() {
     fetchMessages()
 
   }, [user?.email, toast])
+
+  console.log(anonMsg)
   return (
     <>
       <Head>
@@ -92,7 +94,7 @@ export default function Home() {
             {anonMsg.length === 0 && !loading && <NoMessages />}
           </Box>
         }
-
+        
       </Box >
       <Footer />
     </>
