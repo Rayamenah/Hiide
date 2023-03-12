@@ -2,12 +2,16 @@ import { Box, Button, Heading, Text, useToast, Flex } from "@chakra-ui/react";
 import { User, sendEmailVerification } from "firebase/auth";
 import { authenticate } from "../Utils/firebaseConfig";
 import { useRouter } from "next/router"
+import { useAuth } from "../Context/Auth"
 
 
 const VerifyEmail = () => {
     const toast = useToast();
     const auth = authenticate;
     const router = useRouter();
+    const { user } = useAuth()
+
+    user.emailVerified && router.push("/")
 
 
     const HandleEmailVerification = async () => {
@@ -21,7 +25,6 @@ const VerifyEmail = () => {
                     status: "success",
                     duration: 3000
                 })
-                router.push("/")
             }
         } catch (error) {
             toast({
@@ -49,13 +52,16 @@ const VerifyEmail = () => {
                     justifyContent={"center"}
                     mb={"1rem"}
                 >
-                    <Heading fontWeight={"medium"} size={"lg"} mb="0.5rem" as={"h1"}>
-                        Thank you for signing up!
-                    </Heading>
-                    <Text>Please verify your email before proceeding</Text>
+                    <Box>
+                        <Heading fontWeight={"medium"} size={"lg"} mb="0.5rem" as={"h1"}>
+                            Thank you for signing up!
+                        </Heading>
+                        <Text>Please verify your email before proceeding</Text>
+                    </Box>
+
                 </Flex>
 
-                <Button onClick={HandleEmailVerification}>Verify Email</Button>
+                <Button onClick={HandleEmailVerification}>Send Verification Email</Button>
             </Flex>
         </Box>
     )
