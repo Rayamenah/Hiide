@@ -11,7 +11,6 @@ import {
     ModalCloseButton,
     FormLabel,
     useToast,
-    useDisclosure
 } from "@chakra-ui/react";
 import { Db } from "../Utils/firebaseConfig";
 import {

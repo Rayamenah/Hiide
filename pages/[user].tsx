@@ -203,7 +203,7 @@ const SendMessage = () => {
                         <ModalCloseButton />
                         <ModalBody>
                             <Text mb={"1.5rem"}>Now create your account</Text>
-                            <Authentication newUser />
+                            <Authentication isNewUser />
                         </ModalBody>
                     </ModalContent>
                 </Modal>

@@ -1,5 +1,5 @@
 import { Box, Button, Heading, Text, useToast, Flex } from "@chakra-ui/react";
-import { sendEmailVerification } from "firebase/auth";
+import { User, sendEmailVerification } from "firebase/auth";
 import { authenticate } from "../Utils/firebaseConfig";
 import { useRouter } from "next/router"
 
@@ -9,25 +9,30 @@ const VerifyEmail = () => {
     const auth = authenticate;
     const router = useRouter();
 
+
     const HandleEmailVerification = async () => {
         try {
-            await sendEmailVerification(auth.currentUser);
-            toast({
-                title: "Email verification sent",
-                description: "check your inbox for more details",
-                status: "success",
-                duration: 3000
-            })
-            router.push("/")
+            const user: User | null = auth.currentUser;
+            if (user !== null) {
+                await sendEmailVerification(user);
+                toast({
+                    title: "Email verification sent",
+                    description: "check your inbox for more details",
+                    status: "success",
+                    duration: 3000
+                })
+                router.push("/")
+            }
         } catch (error) {
             toast({
                 title: "Error",
-                description: "somethimg went wrong",
+                description: "something went wrong",
                 status: "error",
                 duration: 3000
             })
         }
     }
+
 
     return (
         <Box padding={"2rem"} height={"100vh"}>

@@ -14,7 +14,6 @@ import { useAuth } from "../src/Context/Auth";
 //firebase
 import { collection, getDocs, query } from "firebase/firestore"
 import { Db } from "../src/Utils/firebaseConfig";
-import { AnonymousMessage } from "../src/Utils/types";
 
 
 
@@ -68,7 +67,6 @@ export default function Home() {
 
   }, [user?.email, toast])
 
-  console.log(anonMsg)
   return (
     <>
       <Head>

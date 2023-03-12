@@ -8,7 +8,6 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FaShare } from "react-icons/fa";
-import { AnonymousMessage } from "../Utils/types";
 
 
 

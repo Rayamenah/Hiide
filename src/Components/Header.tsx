@@ -1,7 +1,8 @@
 import NextLink from "next/link";
-import { Box, Flex, Text, Spacer, Button, useToast } from "@chakra-ui/react";
+import { Box, Flex, Text, Spacer, Button, useToast, useDisclosure } from "@chakra-ui/react";
 import DarkMode from "./DarkMode";
 import SignOut from "./SignOut";
+import Username from "./Username";
 import { collection, query, getDocs, where } from "firebase/firestore";
 import { Db } from "../Utils/firebaseConfig"
 import { useAuth } from "../Context/Auth";
@@ -12,6 +13,7 @@ import { useEffect } from "react";
 
 const Header = () => {
     const toast = useToast();
+    const { onOpen, isOpen, onClose } = useDisclosure()
     const { user, signedIn, username, setUsername } = useAuth();
     const url = `https://anony-app.vercel.app/${username}`;
 
@@ -26,7 +28,7 @@ const Header = () => {
                 } catch (error) {
                     toast({
                         title: "something went wrong",
-                        description: "could not find username",
+                        description: "create your username",
                         status: "error",
                         duration: 3000,
                         isClosable: true
@@ -34,40 +36,45 @@ const Header = () => {
                 }
             }
         }
-
         findUsername()
 
     }, [setUsername, toast, user?.email])
 
     const ShareLink = async () => {
 
-        copyTextToClipboard(url)
+        if (username) {
+            copyTextToClipboard(url)
 
-        toast({
-            title: "link copied",
-            description: "now share to your friends",
-            duration: 3000,
-            status: "success",
-            isClosable: true
-        });
+            toast({
+                title: "link copied",
+                description: "now share to your friends",
+                duration: 3000,
+                status: "success",
+                isClosable: true
+            });
 
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: "send me an anonymous message",
-                    text: "i wont know who sent them",
-                    url: url
-                })
-            } catch (error) {
-                toast({
-                    title: "something went wrong",
-                    description: "sharing failed!",
-                    status: "error",
-                    duration: 3000,
-                    isClosable: true
-                })
+            if (navigator.share) {
+                try {
+                    await navigator.share({
+                        title: "send me an anonymous message",
+                        text: "i wont know who sent them",
+                        url: url
+                    })
+                } catch (error) {
+                    toast({
+                        title: "something went wrong",
+                        description: "sharing failed!",
+                        status: "error",
+                        duration: 3000,
+                        isClosable: true
+                    })
+                }
+            } else {
+                onOpen()
             }
         }
+
+
     }
 
     return (
@@ -88,12 +95,15 @@ const Header = () => {
                             leftIcon={username ? <FaShare /> : undefined}
                             onClick={ShareLink}
                         >
-                            share link
+                            {username ? "share link" : "create username"}
                         </Button>}
                         {signedIn && <SignOut />}
                         <DarkMode />
                     </Flex>
                 </Flex >
+
+                <Username isOpen={isOpen} onClose={onClose} />
+
             </Box >
 
         </>

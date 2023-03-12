@@ -16,15 +16,15 @@ import {
     sendPasswordResetEmail
 } from "firebase/auth";
 import { authenticate } from "../Utils/firebaseConfig";
-import errorCodesMap from "../Utils/firebase.errorCodes";
+// import errorCodesMap from "../Utils/firebase.errorCodes";
 
 
 interface Props {
-    newUser?: boolean
+    isNewUser?: boolean
 }
 
 const Authentication = (props: Props) => {
-    const { newUser = false } = props;
+    const { isNewUser = false } = props;
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { signedIn } = useAuth()
     const toast = useToast();
@@ -37,7 +37,7 @@ const Authentication = (props: Props) => {
         showPassword: false,
         submitting: false,
         forgotPassword: false,
-        isNewUser: true
+        isNewUser: isNewUser
     });
 
     const GoogleLogin = async () => {
@@ -82,7 +82,7 @@ const Authentication = (props: Props) => {
             setForm({ ...form, submitting: false })
             toast({
                 title: "Error",
-                description: errorCodesMap[error.code],
+                description: "something went wrong",
                 status: "error",
                 duration: 3000,
                 isClosable: true,
@@ -109,7 +109,7 @@ const Authentication = (props: Props) => {
         } catch (error) {
             toast({
                 title: "Error",
-                description: errorCodesMap[error.code],
+                description: "something went wrong",
                 status: "error",
                 duration: 3000,
                 isClosable: true,
