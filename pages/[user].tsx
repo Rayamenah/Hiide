@@ -147,16 +147,16 @@ const SendMessage = () => {
     }
     return (
         <>
-            <Box w="100%" p="4" px="8">
+            <Box w="100%" p="2">
                 <Header />
                 <Flex
                     flexDirection={"column"}
                     width={"100%"}
                     maxW={"500px"}
-                    padding={"1rem"}
+                    padding={"0.5rem"}
                     margin={"0 auto"}
                 >
-                    <Heading fontWeight={"medium"} size={"md"} mb="0.5rem" as={"h1"}>
+                    <Heading fontWeight={"medium"} size={"md"} mt="0.5rem" mb="0.5rem" as={"h1"}>
                         send
                         <Box px={"5px"} as="span" color="blue.700">
                             {userId}
@@ -170,7 +170,7 @@ const SendMessage = () => {
                             display={"block"}
                             value={anonymousMsg}
                             onChange={HandleInput}
-                            height={"250px"}
+                            height={"200px"}
                             width={"100%"}
                             onFocus={HandleFocus}
                             onBlur={HandleBlur}

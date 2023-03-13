@@ -56,8 +56,8 @@ const Header = () => {
             if (navigator.share) {
                 try {
                     await navigator.share({
-                        title: "send me an anonymous message",
-                        text: "i wont know who sent them",
+                        title: "",
+                        text: "send me an anonymous message and i wont know who sent them",
                         url: url
                     })
                 } catch (error) {

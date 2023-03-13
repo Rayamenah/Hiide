@@ -75,7 +75,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box w="100%" p="4" px="8">
+      <Box w="100%" p="2">
         <Header />
 
         {!signedIn &&
