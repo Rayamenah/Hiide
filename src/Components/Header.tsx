@@ -95,7 +95,7 @@ const Header = () => {
                             leftIcon={username ? <FaShare /> : undefined}
                             onClick={ShareLink}
                         >
-                            {username ? "share link" : "create username"}
+                            {username ? "share" : "create username"}
                         </Button>}
                         {signedIn && <SignOut />}
                         <DarkMode />

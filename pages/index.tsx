@@ -29,12 +29,13 @@ export default function Home() {
 
 
   const toast = useToast()
-  const { user, signedIn, loading } = useAuth()
+  const { user, signedIn, loading, setLoading } = useAuth()
   const [anonMsg, setAnonMsg] = useState<result[]>([])
+  const [loader, setLoader] = useState(false)
 
   useEffect(() => {
-
     const fetchMessages = async () => {
+      setLoader(true)
       if (user?.email) {
         const msg = collection(Db,
           "anonymous-msgs",
@@ -50,6 +51,7 @@ export default function Home() {
           }))
 
           setAnonMsg(messages)
+          setLoader(false)
 
         } catch (error) {
           toast({
@@ -65,7 +67,7 @@ export default function Home() {
 
     fetchMessages()
 
-  }, [user?.email, toast])
+  }, [user?.email, toast, setLoading])
 
   return (
     <>
@@ -75,7 +77,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box w="100%" p="2">
+      <Box w="100%" p="3">
         <Header />
 
         {!signedIn &&
@@ -93,21 +95,24 @@ export default function Home() {
             <Grid
               gridTemplateColumns={{
                 base: "1fr",
-                lg: "1fr 1fr",
+                md: "1fr 1fr",
+                lg: "1fr 1fr 1fr",
               }}
-              columnGap={"2rem"}
-              rowGap={"2rem"}
+              columnGap={"0.5rem"}
+              rowGap={"0.3rem"}
             >
-              {anonMsg.map((msg) => (
+              {loader && <Loader />}
+
+              {!loader && anonMsg.map((msg) => (
                 <Messages key={msg.id} message={msg.message} created_at={msg.created_at} />
               ))}
             </Grid>
-            {anonMsg.length === 0 && !loading && <NoMessages />}
+            {!loader && anonMsg.length === 0 && !loading && <NoMessages />}
           </Box>
         }
+        <Footer />
 
       </Box >
-      <Footer />
     </>
   )
 }

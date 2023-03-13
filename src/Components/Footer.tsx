@@ -5,18 +5,13 @@ const Footer = () => {
 
     return (
         <Flex
-            position={"fixed"}
-            bottom={"-10px"}
             justifyContent={"center"}
             alignItems={"center"}
-            mb="2rem"
-            top={{ base: "96%", lg: "96%" }}
-            left={{ base: "50%", lg: "50%" }}
-            transform={{ base: "translate(-50%, -50%)", lg: "translate(-50%, -50%)" }}
+            mb="0.5rem"
             flexDirection={"column"}
             fontSize={{ base: "sm", lg: "md" }}
             zIndex={100}
-            width={"100vw"}
+            width={"100%"}
             height={"70px"}
         >
             <Text>
