@@ -110,9 +110,10 @@ export default function Home() {
             {!loader && anonMsg.length === 0 && !loading && <NoMessages />}
           </Box>
         }
-        <Footer />
 
       </Box >
+      <Footer />
+
     </>
   )
 }

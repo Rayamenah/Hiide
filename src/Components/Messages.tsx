@@ -86,7 +86,7 @@ function Messages(props: Props) {
                 padding={"1rem"}
                 borderRadius={"md"}
                 height={{ base: "250px", sm: "300px", md: "300px" }}
-                width={{ base: "350px", sm: "350px", md: "300px" }}
+                width={{ base: "320px", sm: "350px", md: "300px" }}
                 gridTemplateRows={"5fr 1fr"}
                 justifySelf={"center"}
                 overflow={"hidden"}

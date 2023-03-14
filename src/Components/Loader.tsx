@@ -29,7 +29,7 @@ function FullPageLoader(props: Props) {
             <ThreeCircles
                 height="100"
                 width="100"
-                color="#4fa94d"
+                color="#091020"
                 ariaLabel="three-circles-rotating"
                 wrapperStyle={{}}
                 wrapperClass=""
