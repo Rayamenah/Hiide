@@ -1,8 +1,7 @@
 import NextLink from "next/link";
-import { Box, Flex, Text, Spacer, Button, useToast, useDisclosure } from "@chakra-ui/react";
+import { Box, Flex, Text, Spacer, Button, useToast, } from "@chakra-ui/react";
 import DarkMode from "./DarkMode";
 import SignOut from "./SignOut";
-import Username from "./Username";
 import { collection, query, getDocs, where } from "firebase/firestore";
 import { Db } from "../Utils/firebaseConfig"
 import { useAuth } from "../Context/Auth";
@@ -13,7 +12,6 @@ import { useEffect } from "react";
 
 const Header = () => {
     const toast = useToast();
-    const { onOpen, isOpen, onClose } = useDisclosure()
     const { user, signedIn, username, setUsername } = useAuth();
     const url = `https://anony-app.vercel.app/${username}`;
 
@@ -57,7 +55,7 @@ const Header = () => {
                 try {
                     await navigator.share({
                         title: "",
-                        text: "send me an anonymous message and i wont know who sent them",
+                        text: "feel free to send me an anonymous message",
                         url: url
                     })
                 } catch (error) {
@@ -69,8 +67,6 @@ const Header = () => {
                         isClosable: true
                     })
                 }
-            } else {
-                onOpen()
             }
         }
 
@@ -95,15 +91,12 @@ const Header = () => {
                             leftIcon={username ? <FaShare /> : undefined}
                             onClick={ShareLink}
                         >
-                            {username ? "share" : "create username"}
+                            share link
                         </Button>}
                         {signedIn && <SignOut />}
                         <DarkMode />
                     </Flex>
                 </Flex >
-
-                <Username isOpen={isOpen} onClose={onClose} />
-
             </Box >
 
         </>

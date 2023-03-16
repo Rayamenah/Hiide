@@ -25,8 +25,8 @@ import { useState } from "react";
 import { useAuth } from "../Context/Auth";
 
 interface Props {
-    isOpen: boolean;
-    onClose: () => void;
+    isOpen: boolean
+    onClose: () => void
 }
 
 function Username(props: Props) {

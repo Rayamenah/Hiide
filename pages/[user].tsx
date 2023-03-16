@@ -4,6 +4,7 @@ import { Db } from "../src/Utils/firebaseConfig";
 import { getAuth, getRedirectResult } from "firebase/auth";
 import { useAuth } from "../src/Context/Auth"
 import { collection, query, addDoc, getDocs, where } from "firebase/firestore"
+import useWindowSize from "../src/Utils/hooks/useWindowSize";
 
 import {
     Button,
@@ -31,6 +32,8 @@ const SendMessage = () => {
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { signedIn, user, username } = useAuth();
+    const windowSize = useWindowSize();
+
 
     const [anonymousMsg, setAnonymousMsg] = useState("");
     const [submitting, setSubmitting] = useState(false);
@@ -38,9 +41,7 @@ const SendMessage = () => {
     const Character_Limit = 250;
     const userId = router.query.user as string;
 
-    // console.log(anonymousMsg)
-
-    ///////////// submit function
+    /// submit function
 
     const HandleSubmit = async (e: any) => {
         e.preventDefault();
@@ -111,7 +112,7 @@ const SendMessage = () => {
         setAnonymousMsg("")
     }
 
-    /////////////// input function 
+    // input function 
     const HandleInput = (e: any) => {
         const value = e.target.value
         if (value.length <= Character_Limit) {
@@ -139,11 +140,15 @@ const SendMessage = () => {
     }, [username, toast]);
 
     const HandleFocus = () => {
-
+        if (windowSize.height < 650) {
+            setFooter(false);
+        }
     }
 
     const HandleBlur = () => {
-
+        if (windowSize.height < 650) {
+            setFooter(true);
+        }
     }
     return (
         <>

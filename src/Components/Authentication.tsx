@@ -5,7 +5,7 @@ import { useAuth } from "../Context/Auth"
 import { AiFillEye, AiFillEyeInvisible, AiTwotoneMail } from "react-icons/ai"
 import { FcGoogle } from "react-icons/fc"
 //components
-import { Box, Button, Flex, Grid, FormControl, FormLabel, Input, InputGroup, InputRightElement, useToast, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure } from "@chakra-ui/react"
+import { Button, Flex, Grid, FormControl, FormLabel, Input, InputGroup, InputRightElement, useToast, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure } from "@chakra-ui/react"
 //Firebase
 import {
     createUserWithEmailAndPassword,
@@ -26,7 +26,7 @@ interface Props {
 const Authentication = (props: Props) => {
     const { isNewUser = false } = props;
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const { signedIn } = useAuth()
+    const { signedIn } = useAuth();
     const toast = useToast();
     const router = useRouter();
     const googleProvider = new GoogleAuthProvider();
@@ -40,7 +40,7 @@ const Authentication = (props: Props) => {
         isNewUser: isNewUser
     });
 
-    const GoogleLogin = async () => {
+    const googleLogin = async () => {
         if (!signedIn) {
             const auth = getAuth()
             await signInWithRedirect(auth, googleProvider)
@@ -53,7 +53,7 @@ const Authentication = (props: Props) => {
             })
         }
     }
-    const EmailAuth = async (e: any) => {
+    const emailAuth = async (e: any) => {
         e.preventDefault()
         setForm({ ...form, submitting: true })
         const auth = authenticate
@@ -92,7 +92,7 @@ const Authentication = (props: Props) => {
     }
 
 
-    const ForgotPassword = async (e: any) => {
+    const forgotPassword = async (e: any) => {
         e.preventDefault()
         const auth = authenticate
         setForm({ ...form, submitting: true })
@@ -135,7 +135,7 @@ const Authentication = (props: Props) => {
         <Flex p="4" mt="10"
             justifyContent={"center"}>
             <Grid rowGap={3}>
-                <Button width={"15rem"} leftIcon={<FcGoogle />} onClick={GoogleLogin}>
+                <Button width={"15rem"} leftIcon={<FcGoogle />} onClick={googleLogin}>
                     Sign in with Google
                 </Button>
 
@@ -153,7 +153,7 @@ const Authentication = (props: Props) => {
                     <ModalBody>
                         {!form.forgotPassword &&
                             <Flex
-                                onSubmit={EmailAuth}
+                                onSubmit={emailAuth}
                                 flexDirection={"column"}
                                 rowGap={"1rem"}
                                 as="form"
@@ -206,7 +206,7 @@ const Authentication = (props: Props) => {
                         }
                         {form.forgotPassword && (
                             <Flex
-                                onSubmit={ForgotPassword}
+                                onSubmit={forgotPassword}
                                 flexDirection={"column"}
                                 rowGap={"1rem"}
                                 as="form"

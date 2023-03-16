@@ -1,15 +1,15 @@
 import { Box, Button, Heading, Text, useToast, Flex } from "@chakra-ui/react";
 import { User, sendEmailVerification } from "firebase/auth";
 import { authenticate } from "../Utils/firebaseConfig";
-import { useRouter } from "next/router"
-import { useAuth } from "../Context/Auth"
+import { useRouter } from "next/router";
+import { useAuth } from "../Context/Auth";
 
 
 const VerifyEmail = () => {
     const toast = useToast();
     const auth = authenticate;
     const router = useRouter();
-    const { user } = useAuth()
+    const { user } = useAuth();
 
     user.emailVerified && router.push("/")
 
@@ -60,7 +60,6 @@ const VerifyEmail = () => {
                     </Box>
 
                 </Flex>
-
                 <Button onClick={HandleEmailVerification}>Send Verification Email</Button>
             </Flex>
         </Box>

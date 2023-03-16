@@ -1,6 +1,6 @@
-import React, { useContext, useEffect, useState, createContext } from "react"
-import { User, onAuthStateChanged } from "firebase/auth"
-import { authenticate } from "../Utils/firebaseConfig"
+import React, { useContext, useEffect, useState, createContext } from "react";
+import { User, onAuthStateChanged } from "firebase/auth";
+import { authenticate } from "../Utils/firebaseConfig";
 
 
 interface Props {

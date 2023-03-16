@@ -25,59 +25,55 @@ function Messages(props: Props) {
     const { colorMode } = useColorMode();
     const [generatingImage, setGeneratingImage] = useState(false);
 
-    //   const handleShareMsg = async () => {
-    //     setGeneratingImage(true);
-    //     const generatedImageResponse = await fetch("/api/generate-image", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify({
-    //         message: msg.message,
-    //         theme: colorMode,
-    //       }),
-    //     });
+    const handleShareMsg = async () => {
+        setGeneratingImage(true);
+        const generatedImageResponse = await fetch("/api/generate-image", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                message: message,
+                theme: colorMode,
+            }),
+        });
 
-    //     const generatedImageBlob = await generatedImageResponse.blob();
-    //     setGeneratingImage(false);
+        const generatedImageBlob = await generatedImageResponse.blob();
+        setGeneratingImage(false);
 
-    //     try {
-    //       const imageFile = new File(
-    //         [generatedImageBlob],
-    //         "anonymous-message.png",
-    //         {
-    //           type: generatedImageBlob.type,
-    //         }
-    //       );
+        try {
+            const imageFile = new File([generatedImageBlob], "anonymous-message.png", {
+                type: generatedImageBlob.type,
+            });
 
-    //       if (navigator.share) {
-    //         await navigator.share({
-    //           title: "Anonymous Message",
-    //           text: "Check out this anonymous message I received",
-    //           files: [imageFile],
-    //         });
-    //       } else if (navigator.clipboard) {
-    //         navigator.clipboard.write([
-    //           new ClipboardItem({ "image/png": generatedImageBlob }),
-    //         ]);
-    //         toast({
-    //           title: "Image copied to clipboard!",
-    //           status: "success",
-    //           duration: 1000,
-    //           isClosable: true,
-    //         });
-    //       } else {
-    //         toast({
-    //           title: "Your browser does not support sharing or copying images",
-    //           status: "error",
-    //           duration: 1000,
-    //           isClosable: true,
-    //         });
-    //       }
-    //     } catch (error) {
-    //       console.error("oops, something went wrong!", error);
-    //     }
-    //   };
+            if (navigator.share) {
+                await navigator.share({
+                    title: "Anonymous Message",
+                    text: "Check out this anonymous message I received",
+                    files: [imageFile],
+                });
+            } else if (navigator.clipboard) {
+                await navigator.clipboard.write([
+                    new ClipboardItem({ "image/png": generatedImageBlob }),
+                ]);
+                toast({
+                    title: "Image copied to clipboard!",
+                    status: "success",
+                    duration: 1000,
+                    isClosable: true,
+                });
+            } else {
+                toast({
+                    title: "Your browser does not support sharing or copying images",
+                    status: "error",
+                    duration: 1000,
+                    isClosable: true,
+                });
+            }
+        } catch (error) {
+            console.error("oops, something went wrong!", error);
+        }
+    };
 
     return (
         <>
@@ -102,7 +98,7 @@ function Messages(props: Props) {
 
                     <Button
                         isLoading={generatingImage}
-                        //   onClick={() => handleShareMsg()}
+                        onClick={() => handleShareMsg()}
                         color={"gray"}
                         size={"sm"}
                     >

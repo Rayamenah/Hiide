@@ -1,6 +1,6 @@
-import Head from 'next/head'
+import Head from 'next/head';
 import { Box, Grid, useToast } from "@chakra-ui/react";
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 //components
 import Header from "../src/Components/Header";
 import Footer from "../src/Components/Footer";
@@ -8,11 +8,11 @@ import LandingPage from "../src/Components/LandingPage";
 import Authentication from "../src/Components/Authentication";
 import VerifyEmail from "../src/Components/VerifyEmail";
 import Messages from "../src/Components/Messages";
-import NoMessages from "../src/Components/NoMessages"
+import NoMessages from "../src/Components/NoMessages";
 import Loader from "../src/Components/Loader";
 import { useAuth } from "../src/Context/Auth";
 //firebase
-import { collection, getDocs, query } from "firebase/firestore"
+import { collection, getDocs, query } from "firebase/firestore";
 import { Db } from "../src/Utils/firebaseConfig";
 
 
