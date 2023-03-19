@@ -13,7 +13,7 @@ import { useEffect } from "react";
 const Header = () => {
     const toast = useToast();
     const { user, signedIn, username, setUsername } = useAuth();
-    const url = `https://anony-app.vercel.app/${username}`;
+    const url = `https://hiide.vercel.app/${username}`;
 
     useEffect(() => {
         const findUsername = async () => {
