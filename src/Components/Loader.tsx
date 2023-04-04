@@ -27,8 +27,8 @@ function FullPageLoader(props: Props) {
             <Text fontSize={"lg"}>Hiide</Text>
 
             <ThreeCircles
-                height="100"
-                width="100"
+                height="25"
+                width="25"
                 color="#091020"
                 ariaLabel="three-circles-rotating"
                 wrapperStyle={{}}
