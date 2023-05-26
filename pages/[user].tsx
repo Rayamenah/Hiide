@@ -1,40 +1,36 @@
-import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import { Db } from "../src/Utils/firebaseConfig";
 import { getAuth, getRedirectResult } from "firebase/auth";
-import { useAuth } from "../src/Context/Auth"
-import { collection, query, addDoc, getDocs, where } from "firebase/firestore"
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+import { useAuth } from "../src/Context/Auth";
+import { Db } from "../src/Utils/firebaseConfig";
 import useWindowSize from "../src/Utils/hooks/useWindowSize";
-
 import {
-    Button,
-    Heading,
     Box,
-    Textarea,
-    useToast,
+    Button,
+    Flex,
+    Heading,
     Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
     ModalBody,
     ModalCloseButton,
-    useDisclosure,
-    Flex,
+    ModalContent,
+    ModalHeader,
+    ModalOverlay,
     Text,
+    Textarea,
+    useDisclosure,
+    useToast,
 } from "@chakra-ui/react";
-
-import Header from "../src/Components/Header"
-import Footer from "../src/Components/Footer";
 import Authentication from "../src/Components/Authentication";
+import Footer from "../src/Components/Footer";
+import Header from "../src/Components/Header";
 
 const SendMessage = () => {
     const router = useRouter();
     const toast = useToast();
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const { signedIn, user, username } = useAuth();
+    const { signedIn } = useAuth();
     const windowSize = useWindowSize();
-
-
     const [anonymousMsg, setAnonymousMsg] = useState("");
     const [submitting, setSubmitting] = useState(false);
     const [footer, setFooter] = useState(true);
@@ -91,7 +87,6 @@ const SendMessage = () => {
             })
         } catch (error) {
             console.log(error)
-            setSubmitting(false)
         }
 
         setSubmitting(false)
@@ -137,7 +132,7 @@ const SendMessage = () => {
                     isClosable: true,
                 });
             });
-    }, [username, toast]);
+    }, [toast]);
 
     const HandleFocus = () => {
         if (windowSize.height < 650) {

@@ -1,8 +1,8 @@
-import { Box, Button, Heading, Text, useToast, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Text, useToast } from "@chakra-ui/react";
 import { User, sendEmailVerification } from "firebase/auth";
-import { authenticate } from "../Utils/firebaseConfig";
 import { useRouter } from "next/router";
 import { useAuth } from "../Context/Auth";
+import { authenticate } from "../Utils/firebaseConfig";
 
 
 const VerifyEmail = () => {
@@ -38,7 +38,7 @@ const VerifyEmail = () => {
 
 
     return (
-        <Box padding={"2rem"} height={"100vh"}>
+        <Box padding={"2rem"} height={"100dvh"}>
 
             <Flex
                 height={"100%"}

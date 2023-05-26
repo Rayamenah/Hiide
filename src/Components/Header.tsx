@@ -1,19 +1,19 @@
+import { Box, Button, Flex, Spacer, Text, useToast, } from "@chakra-ui/react";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import NextLink from "next/link";
-import { Box, Flex, Text, Spacer, Button, useToast, } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { FaShare } from "react-icons/fa";
+import { useAuth } from "../Context/Auth";
+import { copyTextToClipboard } from "../Utils/copyToClipboard";
+import { Db } from "../Utils/firebaseConfig";
 import DarkMode from "./DarkMode";
 import SignOut from "./SignOut";
-import { collection, query, getDocs, where } from "firebase/firestore";
-import { Db } from "../Utils/firebaseConfig"
-import { useAuth } from "../Context/Auth";
-import { FaShare } from "react-icons/fa";
-import { copyTextToClipboard } from "../Utils/copyToClipboard";
-import { useEffect } from "react";
 
 
 const Header = () => {
     const toast = useToast();
     const { user, signedIn, username, setUsername } = useAuth();
-    const url = `https://anony-app.vercel.app/${username}`;
+    const url = `https://hiide.vercel.app/${username}`;
 
     useEffect(() => {
         const findUsername = async () => {

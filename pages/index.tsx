@@ -1,18 +1,18 @@
-import Head from 'next/head';
 import { Box, Grid, useToast } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import Head from 'next/head';
+import { useEffect, useState } from "react";
 //components
-import Header from "../src/Components/Header";
-import Footer from "../src/Components/Footer";
-import LandingPage from "../src/Components/LandingPage";
 import Authentication from "../src/Components/Authentication";
-import VerifyEmail from "../src/Components/VerifyEmail";
+import Footer from "../src/Components/Footer";
+import Header from "../src/Components/Header";
+import LandingPage from "../src/Components/LandingPage";
+import Loader from "../src/Components/Loader";
 import Messages from "../src/Components/Messages";
 import NoMessages from "../src/Components/NoMessages";
-import Loader from "../src/Components/Loader";
+import VerifyEmail from "../src/Components/VerifyEmail";
 import { useAuth } from "../src/Context/Auth";
 //firebase
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { Db } from "../src/Utils/firebaseConfig";
 
 
@@ -42,7 +42,7 @@ export default function Home() {
           user?.email,
           "messages")
         try {
-          const q = query(msg)
+          const q = query(msg, orderBy("created_at", "desc"))
           const docSnap = await getDocs(q)
           const messages = docSnap.docs.map((doc) => ({
             id: doc.id,
@@ -101,13 +101,23 @@ export default function Home() {
               columnGap={"0.5rem"}
               rowGap={"0.3rem"}
             >
-              {loader && <Loader />}
+              {loader ? (
+                <Loader />
+              ) : (
+                <>
+                  {
+                    anonMsg.map((msg: any) => (
+                      <Messages
+                        key={msg.id}
+                        message={msg.message}
+                        created_at={msg.created_at} />
+                    ))
+                  }
+                </>
+              )}
 
-              {!loader && anonMsg.map((msg) => (
-                <Messages key={msg.id} message={msg.message} created_at={msg.created_at} />
-              ))}
             </Grid>
-            {!loader && anonMsg.length === 0 && !loading && <NoMessages />}
+            {(anonMsg.length === 0 && !loading) && <NoMessages />}
           </Box>
         }
 

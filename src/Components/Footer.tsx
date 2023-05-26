@@ -6,18 +6,14 @@ const Footer = () => {
     return (
         <Flex
             bgColor="gray.700"
-            position={"fixed"}
-            bottom={"-12px"}
             justifyContent={"center"}
             alignItems={"center"}
-            mb="1.5rem"
+            mb="-4rem"
             top={{ base: "96%", lg: "96%" }}
-            left={{ base: "50%", lg: "50%" }}
-            transform={{ base: "translate(-50%, -50%)", lg: "translate(-50%, -50%)" }}
             flexDirection={"column"}
             fontSize={{ base: "sm", lg: "md" }}
             zIndex={100}
-            width={"100vw"}
+            width={"100%"}
             height={"75px"}
         >
             <Text>

@@ -1,5 +1,4 @@
 import { Box, Text, useColorMode } from "@chakra-ui/react";
-import React from "react";
 import { ThreeCircles } from "react-loader-spinner";
 
 interface Props { }
@@ -22,7 +21,7 @@ function FullPageLoader(props: Props) {
             flexDir={"column"}
             alignItems="center"
             justifyContent="center"
-            height={"100vh"}
+            height={"100dvh"}
         >
             <Text fontSize={"lg"}>Hiide</Text>
 

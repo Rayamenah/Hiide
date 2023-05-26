@@ -1,5 +1,4 @@
-import { Box, Flex, Text, Button, useDisclosure, useToast } from "@chakra-ui/react";
-import React from "react";
+import { Box, Button, Flex, Text, useDisclosure, useToast } from "@chakra-ui/react";
 import { FaShare } from "react-icons/fa";
 import { useAuth } from "../Context/Auth";
 import Username from "./Username";
@@ -13,10 +12,7 @@ function NoMessagesView(props: Props) {
     const toast = useToast();
     const url = `https://anony-app.vercel.app/${username}`;
 
-
-
     const shareLink = async () => {
-
         if (navigator.share) {
             try {
                 await navigator.share({
@@ -39,7 +35,7 @@ function NoMessagesView(props: Props) {
 
 
     return (
-        <Flex width={"100%"} height={"70vh"} justifyContent={"center"} alignItems={"center"}>
+        <Flex width={"100%"} height='70dvh' justifyContent={"center"} alignItems={"center"}>
             <Box>
                 <Text textAlign={"center"} fontSize={"sm"} mb="4">
                     Oops! 😅 No one has sent you a message. Create your username, share your profile URL and check
