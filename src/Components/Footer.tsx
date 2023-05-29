@@ -6,7 +6,7 @@ const Footer = () => {
 
     return (
         <Flex
-            position='absolute'
+            position='fixed'
             bgColor={colorMode === "light" ? 'white' : '#1a202c'}
             color={colorMode === "light" ? 'blue.600' : 'white'}
             justifyContent={"center"}

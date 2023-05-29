@@ -5,6 +5,7 @@ import {
     Text,
     useColorMode,
     useToast,
+    Icon
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FaShare } from "react-icons/fa";
@@ -81,7 +82,7 @@ function Messages(props: Props) {
                 border={"1px solid"}
                 padding={"1rem"}
                 borderRadius={"md"}
-                height={{ base: "250px", sm: "300px", md: "300px" }}
+                height={{ base: "200px", sm: "250px", md: "250px" }}
                 width={{ base: "320px", sm: "350px", md: "300px" }}
                 gridTemplateRows={"5fr 1fr"}
                 justifySelf={"center"}
@@ -91,7 +92,7 @@ function Messages(props: Props) {
                 <Text fontSize='9pt'>{message}</Text>
 
                 <Flex justifyContent={"space-between"} alignItems={"center"}>
-                    <Text textAlign={"right"} fontSize={"sm"}>
+                    <Text textAlign={"right"} fontSize='10'>
                         {created_at &&
                             new Date(created_at?.seconds * 1000).toLocaleDateString()}
                     </Text>
@@ -103,8 +104,8 @@ function Messages(props: Props) {
                         size={"sm"}
                     >
                         <Flex alignItems={"center"} columnGap={"5px"}>
-                            <FaShare />
-                            <Text>Share</Text>
+                            <Icon as={FaShare} fontSize='10' />
+                            <Text fontSize='10'>Share</Text>
                         </Flex>
                     </Button>
                 </Flex>

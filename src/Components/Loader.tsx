@@ -21,7 +21,7 @@ function FullPageLoader(props: Props) {
             flexDir={"column"}
             alignItems="center"
             justifyContent="center"
-            height={"100dvh"}
+            height={"100vh"}
         >
             <Text fontSize={"lg"}>Hiide</Text>
 

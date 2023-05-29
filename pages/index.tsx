@@ -106,17 +106,14 @@ export default function Home() {
                 <Loader />
               ) : (
                 <>
-                  {
-                    anonMsg.map((msg: any) => (
-                      <Messages
-                        key={msg.id}
-                        message={msg.message}
-                        created_at={msg.created_at} />
-                    ))
-                  }
+                  {anonMsg.map((msg: any) => (
+                    <Messages
+                      key={msg.id}
+                      message={msg.message}
+                      created_at={msg.created_at} />
+                  ))}
                 </>
               )}
-
             </Grid>
             {(anonMsg.length === 0 && !loading) && <NoMessages />}
           </Box>
