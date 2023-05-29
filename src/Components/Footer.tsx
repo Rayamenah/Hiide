@@ -1,42 +1,45 @@
-import { Link, Flex, Text, } from "@chakra-ui/react";
+import { Flex, Link, Text, useColorMode, Icon } from "@chakra-ui/react";
 import { FaGithub, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
+    const { colorMode } = useColorMode();
 
     return (
         <Flex
-            bgColor="gray.700"
+            position='absolute'
+            bgColor={colorMode === "light" ? 'white' : '#1a202c'}
+            color={colorMode === "light" ? 'blue.600' : 'white'}
             justifyContent={"center"}
             alignItems={"center"}
-            mb="-4rem"
-            top={{ base: "96%", lg: "96%" }}
+            bottom={0}
+            left={0}
             flexDirection={"column"}
             fontSize={{ base: "sm", lg: "md" }}
             zIndex={100}
             width={"100%"}
-            height={"75px"}
+            height={"70px"}
         >
-            <Text>
+            <Text fontSize='9pt'>
                 © {new Date().getFullYear()} Hiide - Send Anonymous Messages
             </Text>
-            <Flex justifyContent={"space-between"} gap="4" flexWrap={"wrap"} alignItems={"center"}>
-                <Text pr={"3px"}>Built and designed by Raymond </Text>
-                <Link
-                    color={"black"}
-                    pr={"3px"}
-                    href="https://github.com/RaymondAmenah">
-                    <FaGithub />
-                </Link>{" "}
+            <Flex justify="space-between" gap={2} flexWrap={"wrap"} align="center">
+                <Text fontSize='9pt'>Built and designed by Raymond </Text>
+                <Flex gap='2'>
+                    <Link
+                        color={"black"}
+                        href="https://github.com/RaymondAmenah">
+                        <Icon as={FaGithub} fontSize='9pt' />
+                    </Link>{" "}
 
-                <Link
-                    color={"blue.600"}
-                    pr={"3px"}
-                    href="https://twitter.com/JamesRhaymond"
-                >
-                    <FaTwitter />
-                </Link>{" "}
+                    <Link
+                        color={"blue.600"}
+                        href="https://twitter.com/JamesRhaymond"
+                    >
+                        <Icon as={FaTwitter} fontSize='9pt' />
+                    </Link>{" "}
+                </Flex>
             </Flex>
-        </Flex>
+        </Flex >
     )
 }
 

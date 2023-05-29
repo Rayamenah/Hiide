@@ -27,7 +27,7 @@ const SignOut = () => {
             leftIcon={<CiLogout />}
             variant={"outline"}
             onClick={logout}>
-            <Text display={{ base: "none", lg: "block" }}>Sign out</Text>
+            <Text display={{ base: "none", lg: "block" }} fontSize='8pt'>Sign out</Text>
         </Button>
     );
 }

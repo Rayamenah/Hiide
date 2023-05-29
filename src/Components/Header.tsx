@@ -59,13 +59,7 @@ const Header = () => {
                         url: url
                     })
                 } catch (error) {
-                    toast({
-                        title: "something went wrong",
-                        description: "sharing failed!",
-                        status: "error",
-                        duration: 3000,
-                        isClosable: true
-                    })
+                    console.log('share username error', error)
                 }
             }
         }
@@ -90,6 +84,7 @@ const Header = () => {
                             colorScheme="blue"
                             leftIcon={username ? <FaShare /> : undefined}
                             onClick={ShareLink}
+                            fontSize={'8pt'}
                         >
                             share link
                         </Button>}

@@ -78,7 +78,7 @@ function Messages(props: Props) {
     return (
         <>
             <Grid
-                border={"1px solid #ccc"}
+                border={"1px solid"}
                 padding={"1rem"}
                 borderRadius={"md"}
                 height={{ base: "250px", sm: "300px", md: "300px" }}
@@ -88,7 +88,7 @@ function Messages(props: Props) {
                 overflow={"hidden"}
                 mt={"6"}
             >
-                <Text>{message}</Text>
+                <Text fontSize='9pt'>{message}</Text>
 
                 <Flex justifyContent={"space-between"} alignItems={"center"}>
                     <Text textAlign={"right"} fontSize={"sm"}>

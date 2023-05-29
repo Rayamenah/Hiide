@@ -147,7 +147,7 @@ const SendMessage = () => {
     }
     return (
         <>
-            <Box w="100%" p="2">
+            <Box w="100%" p="2" position='relative' height='100vh'>
                 <Header />
                 <Flex
                     flexDirection={"column"}
@@ -176,17 +176,18 @@ const SendMessage = () => {
                             onBlur={HandleBlur}
                             placeholder={`type a message for ${userId}`}
                             mb={"1rem"}
+                            fontSize='9pt'
                         />
                         <Flex justifyContent="space-between">
-                            <Text>
+                            <Text fontSize='9pt'>
                                 <Box as="span">{anonymousMsg.length}</Box>/{Character_Limit}
                             </Text>
                             <Button
-                                bg={"#0D67FF"}
                                 type="submit"
                                 width="100px"
                                 isLoading={submitting}
                                 loadingText="sending"
+                                fontSize='10pt'
                             >
                                 Send
                             </Button>

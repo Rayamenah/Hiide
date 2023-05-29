@@ -1,21 +1,21 @@
-import { useState } from "react"
 import { useRouter } from "next/router"
+import { useState } from "react"
 import { useAuth } from "../Context/Auth"
 //icons
 import { AiFillEye, AiFillEyeInvisible, AiTwotoneMail } from "react-icons/ai"
 import { FcGoogle } from "react-icons/fc"
 //components
-import { Button, Flex, Grid, FormControl, FormLabel, Input, InputGroup, InputRightElement, useToast, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure } from "@chakra-ui/react"
+import { Button, Flex, FormControl, FormLabel, Grid, Input, InputGroup, InputRightElement, Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay, useDisclosure, useToast } from "@chakra-ui/react"
 //Firebase
 import {
+    GoogleAuthProvider,
     createUserWithEmailAndPassword,
     getAuth,
-    GoogleAuthProvider,
+    sendPasswordResetEmail,
     signInWithEmailAndPassword,
-    signInWithRedirect,
-    sendPasswordResetEmail
-} from "firebase/auth";
-import { authenticate } from "../Utils/firebaseConfig";
+    signInWithRedirect
+} from "firebase/auth"
+import { authenticate } from "../Utils/firebaseConfig"
 // import errorCodesMap from "../Utils/firebase.errorCodes";
 
 
@@ -25,12 +25,6 @@ interface Props {
 
 const Authentication = (props: Props) => {
     const { isNewUser = false } = props;
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const { signedIn } = useAuth();
-    const toast = useToast();
-    const router = useRouter();
-    const googleProvider = new GoogleAuthProvider();
-
     const [form, setForm] = useState({
         email: "",
         password: "",
@@ -39,19 +33,31 @@ const Authentication = (props: Props) => {
         forgotPassword: false,
         isNewUser: isNewUser
     });
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const { signedIn } = useAuth();
+    const toast = useToast();
+    const router = useRouter();
+    const googleProvider = new GoogleAuthProvider();
+
+
 
     const googleLogin = async () => {
-        if (!signedIn) {
-            const auth = getAuth()
-            await signInWithRedirect(auth, googleProvider)
-            toast({
-                title: "signed in",
-                description: "",
-                status: "success",
-                duration: 3000,
-                isClosable: true
-            })
+        try {
+            if (!signedIn) {
+                const auth = getAuth()
+                await signInWithRedirect(auth, googleProvider)
+                toast({
+                    title: "signed in",
+                    description: "",
+                    status: "success",
+                    duration: 3000,
+                    isClosable: true
+                })
+            }
+        } catch (error) {
+            console.log('google sign in error', error)
         }
+
     }
     const emailAuth = async (e: any) => {
         e.preventDefault()
@@ -79,6 +85,7 @@ const Authentication = (props: Props) => {
                 })
             }
         } catch (error) {
+            console.log('sign up error', error)
             setForm({ ...form, submitting: false })
             toast({
                 title: "Error",
@@ -124,7 +131,7 @@ const Authentication = (props: Props) => {
         if (form.isNewUser && !form.forgotPassword) {
             return "Create Account"
         } else if (form.forgotPassword) {
-            return "reset password"
+            return "Reset password"
         } else {
             return "Sign in"
         }
@@ -135,11 +142,11 @@ const Authentication = (props: Props) => {
         <Flex p="4" mt="10"
             justifyContent={"center"}>
             <Grid rowGap={3}>
-                <Button width={"15rem"} leftIcon={<FcGoogle />} onClick={googleLogin}>
+                <Button fontSize='9pt' width={"15rem"} leftIcon={<FcGoogle />} onClick={googleLogin}>
                     Sign in with Google
                 </Button>
 
-                <Button width={"15rem"} leftIcon={<AiTwotoneMail />} onClick={onOpen}>
+                <Button fontSize='9pt' width={"15rem"} leftIcon={<AiTwotoneMail />} onClick={onOpen}>
                     Sign in with Email
                 </Button>
             </Grid>
@@ -159,27 +166,31 @@ const Authentication = (props: Props) => {
                                 as="form"
                             >
                                 <FormControl isRequired>
-                                    <FormLabel>Email</FormLabel>
+                                    <FormLabel fontSize='10pt'>Email</FormLabel>
 
                                     <Input
                                         type="email"
                                         placeholder="john.doe@example.com"
                                         value={form.email}
+                                        fontSize='9pt'
                                         onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value, }
                                         ))} />
                                 </FormControl>
 
                                 <FormControl isRequired>
-                                    <FormLabel>Password</FormLabel>
+                                    <FormLabel fontSize='10pt'>Password</FormLabel>
                                     <InputGroup>
                                         <Input
                                             type={form.showPassword ? "text" : "password"}
+                                            fontSize='9pt'
                                             placeholder="john.doe@example.com"
                                             value={form.password}
                                             onChange={(e) => setForm((prev) => ({ ...prev, password: e.target.value }
                                             ))} />
-                                        <InputRightElement width="4.5rem">
+                                        <InputRightElement width="3rem">
                                             <Button
+                                                bgColor='transparent'
+                                                _hover={{ bgColor: 'transparent' }}
                                                 h="1.75rem"
                                                 size="sm"
                                                 onClick={() =>
@@ -199,8 +210,8 @@ const Authentication = (props: Props) => {
                                     isLoading={form.submitting}
                                     loadingText="submitting"
                                     colorScheme="facebook"
-                                >
-                                    SUBMIT
+                                    fontSize='9pt'>
+                                    Submit
                                 </Button>
                             </Flex>
                         }
@@ -215,6 +226,7 @@ const Authentication = (props: Props) => {
                                     <FormLabel>Email</FormLabel>
                                     <Input
                                         type="email"
+                                        fontSize='9pt'
                                         placeholder="e.g. john.doe@example.com"
                                         value={form.email}
                                         onChange={(e) =>
@@ -230,7 +242,7 @@ const Authentication = (props: Props) => {
                                     isLoading={form.submitting}
                                     loadingText={"Submitting"}
                                     type="submit"
-                                >
+                                    fontSize='9pt'>
                                     Submit
                                 </Button>
                             </Flex>
@@ -243,6 +255,7 @@ const Authentication = (props: Props) => {
                         >
                             <Button
                                 variant={"link"}
+                                fontSize='10'
                                 onClick={() =>
                                     setForm((prev) => ({
                                         ...prev,
@@ -263,6 +276,7 @@ const Authentication = (props: Props) => {
                                         isNewUser: !prev.isNewUser,
                                     }))
                                 }
+                                fontSize='10'
                             >
                                 {form.isNewUser
                                     ? "Do you have an existing account ?"

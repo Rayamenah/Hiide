@@ -77,7 +77,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box w="100%" p="3">
+      <Box w="100%" p="3" position='relative' height='100vh' >
         <Header />
 
         {!signedIn &&
@@ -100,6 +100,7 @@ export default function Home() {
               }}
               columnGap={"0.5rem"}
               rowGap={"0.3rem"}
+              height='70vh'
             >
               {loader ? (
                 <Loader />
@@ -120,9 +121,9 @@ export default function Home() {
             {(anonMsg.length === 0 && !loading) && <NoMessages />}
           </Box>
         }
+        <Footer />
 
       </Box >
-      <Footer />
 
     </>
   )
