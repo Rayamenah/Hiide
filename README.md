@@ -39,14 +39,20 @@ The Anonymous Messaging App utilizes Firebase Firestore as the database. Follow 
 ## Create a Firebase Project
 
 Go to the Firebase Console.
+
 Click on the "Add project" button.
+
 Provide a name for your project and click "Continue."
-Set Up Firestore Database
-Configure Firestore Credentials
+
+Set Up Firestore Database.
+
+Configure Firestore Credentials.
+
 
 Copy the Firestore configuration object.
-Open the project code in your preferred code editor.
-Locate the firebaseConfig object in the src/firebase.js file.
+
+Locate the firebaseConfig object in the src/utils/firebaseConfig.ts file.
+
 Replace the existing configuration with the copied Firestore configuration.
 ```
 const firebaseConfig = {
